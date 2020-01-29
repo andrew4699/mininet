@@ -27,13 +27,18 @@ class Firewall (object):
     match.new_proto = pkt.ipv4.ICMP_PROTOCOL
     fm = of.ofp_flow_mod()
     fm.match = match
-    fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+    # fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
     self.connection.send(fm)
 
     match = of.ofp_match()
     match.new_proto = pkt.arp.REQUEST
     fm = of.ofp_flow_mod()
     fm.match = match
+    # fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+    self.connection.send(fm)
+
+    fm = of.ofp_flow_mod()
+    fm.match = of.ofp_match()
     fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
     self.connection.send(fm)
 
