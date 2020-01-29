@@ -23,15 +23,6 @@ class Firewall (object):
     connection.addListeners(self)
 
     #add switch rules here
-    # everything else
-    match = of.ofp_match()
-    # match.dl_type = pkt.ethernet.IP_TYPE
-    fm = of.ofp_flow_mod()
-    fm.match = match
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
-    fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
-    self.connection.send(fm)
 
     # ICMP
     match = of.ofp_match()
@@ -39,6 +30,13 @@ class Firewall (object):
     match.dl_type = pkt.ethernet.IP_TYPE
     fm = of.ofp_flow_mod()
     fm.match = match
+    fm.priority = 32767
+    fm.hard_timeout = 0
+    fm.soft_timeout = 0
+    fm.nw_src = None
+    fm.nw_dst = None
+    fm.tp_src = None
+    fm.tp_dst = None
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
@@ -48,9 +46,70 @@ class Firewall (object):
     match.dl_type = pkt.ethernet.ARP_TYPE
     fm = of.ofp_flow_mod()
     fm.match = match
+    fm.priority = 32767
+    fm.hard_timeout = 0
+    fm.soft_timeout = 0
+    fm.nw_src = None
+    fm.nw_dst = None
+    fm.tp_src = None
+    fm.tp_dst = None
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
+    match = of.ofp_match()
+    match.nw_proto = pkt.arp.REPLY
+    match.dl_type = pkt.ethernet.ARP_TYPE
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.priority = 32767
+    fm.hard_timeout = 0
+    fm.soft_timeout = 0
+    fm.nw_src = None
+    fm.nw_dst = None
+    fm.tp_src = None
+    fm.tp_dst = None
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
+    self.connection.send(fm)
+
+    match = of.ofp_match()
+    match.nw_proto = pkt.arp.REV_REQUEST
+    match.dl_type = pkt.ethernet.ARP_TYPE
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.priority = 32767
+    fm.hard_timeout = 0
+    fm.soft_timeout = 0
+    fm.nw_src = None
+    fm.nw_dst = None
+    fm.tp_src = None
+    fm.tp_dst = None
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
+    self.connection.send(fm)
+
+    match = of.ofp_match()
+    match.nw_proto = pkt.arp.REV_REPLY
+    match.dl_type = pkt.ethernet.ARP_TYPE
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.priority = 32767
+    fm.hard_timeout = 0
+    fm.soft_timeout = 0
+    fm.nw_src = None
+    fm.nw_dst = None
+    fm.tp_src = None
+    fm.tp_dst = None
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
+    self.connection.send(fm)
+
+    # everything else
+    match = of.ofp_match()
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.hard_timeout = 0
+    fm.soft_timeout = 0
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+    fm.priority = 1
+    self.connection.send(fm)
 
   def _handle_PacketIn (self, event):
     """
