@@ -5,6 +5,7 @@
 
 from pox.core import core
 import pox.openflow.libopenflow_01 as of
+import pox.lib.packet as pkt
 
 log = core.getLogger()
 
@@ -22,10 +23,19 @@ class Firewall (object):
     connection.addListeners(self)
 
     #add switch rules here
+    match = of.ofp_match()
+    match.new_proto = pkt.ipv4.ICMP_PROTOCOL
     fm = of.ofp_flow_mod()
-    fm.match.in_port = 3
+    fm.match = match
     fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
-    connection.send(fm)
+    self.connection.send(fm)
+
+    match = of.ofp_match()
+    match.new_proto = pkt.arp.REQUEST
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+    self.connection.send(fm)
 
   def _handle_PacketIn (self, event):
     """
