@@ -23,20 +23,26 @@ class Firewall (object):
     connection.addListeners(self)
 
     #add switch rules here
+
+    # ICMP
     match = of.ofp_match()
     match.nw_proto = pkt.ipv4.ICMP_PROTOCOL
+    match.dl_type = pkt.ethernet.IP_TYPE
     fm = of.ofp_flow_mod()
     fm.match = match
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
+    # ARP
     match = of.ofp_match()
     match.nw_proto = pkt.arp.REQUEST
+    match.dl_type = pkt.ethernet.ARP_TYPE
     fm = of.ofp_flow_mod()
     fm.match = match
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
+    # everything else
     fm = of.ofp_flow_mod()
     fm.match = of.ofp_match()
     fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
