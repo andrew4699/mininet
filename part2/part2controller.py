@@ -23,6 +23,15 @@ class Firewall (object):
     connection.addListeners(self)
 
     #add switch rules here
+    # everything else
+    match = of.ofp_match()
+    # match.dl_type = pkt.ethernet.IP_TYPE
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.hard_timeout = 0
+    fm.soft_timeout = 0
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+    self.connection.send(fm)
 
     # ICMP
     match = of.ofp_match()
@@ -42,15 +51,6 @@ class Firewall (object):
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
-    # everything else
-    match = of.ofp_match()
-    # match.dl_type = pkt.ethernet.IP_TYPE
-    fm = of.ofp_flow_mod()
-    fm.match = match
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
-    fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
-    self.connection.send(fm)
 
   def _handle_PacketIn (self, event):
     """
