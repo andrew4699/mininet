@@ -102,14 +102,14 @@ class Firewall (object):
     self.connection.send(fm)
 
     # everything else
-    match = of.ofp_match()
-    fm = of.ofp_flow_mod()
-    fm.match = match
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
-    fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
-    fm.priority = 1
-    self.connection.send(fm)
+    # match = of.ofp_match()
+    # fm = of.ofp_flow_mod()
+    # fm.match = match
+    # fm.hard_timeout = 0
+    # fm.soft_timeout = 0
+    # fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+    # fm.priority = 1
+    # self.connection.send(fm)
 
   def _handle_PacketIn (self, event):
     """
