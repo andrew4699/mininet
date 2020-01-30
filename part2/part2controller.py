@@ -31,12 +31,12 @@ class Firewall (object):
     fm = of.ofp_flow_mod()
     fm.match = match
     fm.priority = 32767
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
-    fm.nw_src = None
-    fm.nw_dst = None
-    fm.tp_src = None
-    fm.tp_dst = None
+    # fm.hard_timeout = 0
+    # fm.soft_timeout = 0
+    # fm.nw_src = None
+    # fm.nw_dst = None
+    # fm.tp_src = None
+    # fm.tp_dst = None
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
@@ -47,12 +47,12 @@ class Firewall (object):
     fm = of.ofp_flow_mod()
     fm.match = match
     fm.priority = 32767
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
-    fm.nw_src = None
-    fm.nw_dst = None
-    fm.tp_src = None
-    fm.tp_dst = None
+    # fm.hard_timeout = 0
+    # fm.soft_timeout = 0
+    # fm.nw_src = None
+    # fm.nw_dst = None
+    # fm.tp_src = None
+    # fm.tp_dst = None
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
@@ -62,12 +62,12 @@ class Firewall (object):
     fm = of.ofp_flow_mod()
     fm.match = match
     fm.priority = 32767
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
-    fm.nw_src = None
-    fm.nw_dst = None
-    fm.tp_src = None
-    fm.tp_dst = None
+    # fm.hard_timeout = 0
+    # fm.soft_timeout = 0
+    # fm.nw_src = None
+    # fm.nw_dst = None
+    # fm.tp_src = None
+    # fm.tp_dst = None
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
@@ -77,12 +77,12 @@ class Firewall (object):
     fm = of.ofp_flow_mod()
     fm.match = match
     fm.priority = 32767
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
-    fm.nw_src = None
-    fm.nw_dst = None
-    fm.tp_src = None
-    fm.tp_dst = None
+    # fm.hard_timeout = 0
+    # fm.soft_timeout = 0
+    # fm.nw_src = None
+    # fm.nw_dst = None
+    # fm.tp_src = None
+    # fm.tp_dst = None
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
@@ -92,12 +92,12 @@ class Firewall (object):
     fm = of.ofp_flow_mod()
     fm.match = match
     fm.priority = 32767
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
-    fm.nw_src = None
-    fm.nw_dst = None
-    fm.tp_src = None
-    fm.tp_dst = None
+    # fm.hard_timeout = 0
+    # fm.soft_timeout = 0
+    # fm.nw_src = None
+    # fm.nw_dst = None
+    # fm.tp_src = None
+    # fm.tp_dst = None
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
@@ -105,8 +105,8 @@ class Firewall (object):
     match = of.ofp_match()
     fm = of.ofp_flow_mod()
     fm.match = match
-    fm.hard_timeout = 0
-    fm.soft_timeout = 0
+    # fm.hard_timeout = 0
+    # fm.soft_timeout = 0
     # fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
     fm.priority = 1
     self.connection.send(fm)
