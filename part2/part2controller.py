@@ -42,29 +42,29 @@ class Firewall (object):
     fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
     self.connection.send(fm)
 
-    # match = of.ofp_match()
-    # match.nw_proto = pkt.arp.REPLY
-    # match.dl_type = pkt.ethernet.ARP_TYPE
-    # fm = of.ofp_flow_mod()
-    # fm.match = match
-    # fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
-    # self.connection.send(fm)
+    match = of.ofp_match()
+    match.nw_proto = pkt.arp.REPLY
+    match.dl_type = pkt.ethernet.ARP_TYPE
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
+    self.connection.send(fm)
 
-    # match = of.ofp_match()
-    # match.nw_proto = pkt.arp.REV_REQUEST
-    # match.dl_type = pkt.ethernet.ARP_TYPE
-    # fm = of.ofp_flow_mod()
-    # fm.match = match
-    # fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
-    # self.connection.send(fm)
+    match = of.ofp_match()
+    match.nw_proto = pkt.arp.REV_REQUEST
+    match.dl_type = pkt.ethernet.ARP_TYPE
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
+    self.connection.send(fm)
 
-    # match = of.ofp_match()
-    # match.nw_proto = pkt.arp.REV_REPLY
-    # match.dl_type = pkt.ethernet.ARP_TYPE
-    # fm = of.ofp_flow_mod()
-    # fm.match = match
-    # fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
-    # self.connection.send(fm)
+    match = of.ofp_match()
+    match.nw_proto = pkt.arp.REV_REPLY
+    match.dl_type = pkt.ethernet.ARP_TYPE
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_NORMAL))
+    self.connection.send(fm)
 
     # everything else
     match = of.ofp_match()
