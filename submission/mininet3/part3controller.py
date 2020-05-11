@@ -6,6 +6,7 @@
 from pox.core import core
 import pox.openflow.libopenflow_01 as of
 from pox.lib.addresses import IPAddr, IPAddr6, EthAddr
+import pox.lib.packet as pkt
 
 log = core.getLogger()
 
@@ -46,25 +47,59 @@ class Part3Controller (object):
       print ("UNKNOWN SWITCH")
       exit(1)
 
+  def allow_all(self):
+    match = of.ofp_match()
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.actions.append(of.ofp_action_output(port = of.OFPP_FLOOD))
+    self.connection.send(fm)
+
+  def block_icmp_hnotrust1(self):
+    match = of.ofp_match()
+    match.nw_proto = pkt.ipv4.ICMP_PROTOCOL
+    match.dl_type = pkt.ethernet.IP_TYPE
+    match.set_nw_src(IPS["hnotrust"][0])
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    self.connection.send(fm)
+
+  def block_ip_hnotrust1_to_dcs31(self):
+    match = of.ofp_match()
+    match.dl_type = pkt.ethernet.IP_TYPE
+    match.set_nw_src(IPS["hnotrust"][0])
+    match.set_nw_dst(IPS["serv1"][0])
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    self.connection.send(fm)
+
+  def route_to_port(self, host, port):
+    match = of.ofp_match()
+    match.set_nw_dst(IPS[host][0])
+    fm = of.ofp_flow_mod()
+    fm.match = match
+    fm.actions.append(of.ofp_action_output(port = port))
+    self.connection.send(fm)
+
   def s1_setup(self):
-    #put switch 1 rules here
-    pass
+    self.allow_all()
 
   def s2_setup(self):
-    #put switch 2 rules here
-    pass
+    self.allow_all()
 
   def s3_setup(self):
-    #put switch 3 rules here
-    pass
+    self.allow_all()
 
   def cores21_setup(self):
-    #put core switch rules here
-    pass
+    self.block_icmp_hnotrust1()
+    self.block_ip_hnotrust1_to_dcs31()
+    self.route_to_port("h10", 1)
+    self.route_to_port("h20", 2)
+    self.route_to_port("h30", 3)
+    self.route_to_port("serv1", 4)
+    self.route_to_port("hnotrust", 5)
 
   def dcs31_setup(self):
-    #put datacenter switch rules here
-    pass
+    self.allow_all()
 
   #used in part 4 to handle individual ARP packets
   #not needed for part 3 (USE RULES!)
